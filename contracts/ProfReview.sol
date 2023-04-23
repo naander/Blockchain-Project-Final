@@ -4,29 +4,26 @@ pragma solidity >= 0.8.18;
 
 contract ProfReview {
 
-    // I just added the indexed part, that isn't in the contract I deployed
-    // Idk if that is going to have an effect
-    event UpdateReviews(string indexed newReviews, uint newRating);
+    address private owner;
 
-    // state variable
-    uint public profID;
-    uint public profRating;
+    event UpdateReviews(uint indexed profID, string newReviews, uint newRating);
 
-    // The only variable that is required when deploying the contract is profID
-    constructor (uint initprofID) {
-        profID = initprofID;
-        profRating = 4;
+    // Constructor grabs the contract creator's address
+    constructor() {
+        owner = msg.sender;
     }
 
+    // What keeps other people from calling the addReview function
+    modifier checkSender() { 
+        require(msg.sender == owner, "Only the owner can call this function!");
+        _;
+        // Underscore is a convention to show no parameters being used
+    }
 
-
-   // updating the reviews by just replacing the last review
-   function addReview(string memory _newReview, uint _newRating) public {
-        emit UpdateReviews(_newReview, _newRating);
-        profRating = _newRating;
+   // Adding the individual reviews for a specific professor 
+   function addReview(uint _profID, string memory _newReview, uint _newRating) public checkSender {
+        emit UpdateReviews(_profID, _newReview, _newRating);
    }
 
    
-
-
 }

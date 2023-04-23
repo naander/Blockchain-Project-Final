@@ -5,7 +5,7 @@ require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-etherscan");
 
 
-const { API_URL, PRIVATE_KEY } = process.env;
+const { API_URL_ALCHEMY, PRIVATE_KEY } = process.env;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
   networks: {
       hardhat: {},
       goerli: {
-         url: API_URL,
+         url: API_URL_ALCHEMY,
          accounts: [`0x${PRIVATE_KEY}`]
       }
   },

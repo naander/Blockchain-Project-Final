@@ -6,7 +6,7 @@ async function main() {
     // This is where you actually deploy the contract
     // The parameter profID is what is needed from the website 
     // For test I am just inputing a random profID
-    const prof_review = await ProfReview.deploy(12);
+    const prof_review = await ProfReview.deploy();
 
     // This is just to show where this contract is being stored
     console.log("Contract deployed to address: ", prof_review.address);
