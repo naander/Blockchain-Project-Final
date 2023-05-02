@@ -3,7 +3,7 @@ const Web3 = require("web3");
 const web3 = new Web3("https://eth-goerli.g.alchemy.com/v2/2weKkQ426LualTuW1XrCkDRyOOj284BH");
 const {ethers} = require("hardhat");
 
-const apiKey = process.env.API_KEY;
+const apiKey = process.env.API_KEY_ALCHEMY;
 const privateKey = process.env.PRIVATE_KEY;
 
 const contractAddress = process.env.CONTRACT_ADDRESS;
@@ -22,12 +22,14 @@ const addReview = async (profID, review, rating) => {
   try {
 
     console.log("Adding the review: " + review + "  Rating: " + rating);
-    const tx = await contractAdd.addReview(profID, review, rating).catch(error => {
-      throw new Error('might not have enough gas for transactions');
-    });
+    // const tx = await contractAdd.addReview(profID, review, rating).catch(error => {
+    //   throw new Error('might not have enough gas for transactions');
+    // });
+    const tx = await contractAdd.addReview(profID, review, rating)
     console.log("The review has been added");
     
     return { success: true};
+
 
   } catch (error) {
 
@@ -66,9 +68,9 @@ const getReviews = async (profID) => {
             count++;
         });
         average = (sum / count);
+        average = average.toFixed(2)
     });
     return {reviewList: reviewList, average: average};
-
 };
 
 

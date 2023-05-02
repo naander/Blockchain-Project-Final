@@ -12,8 +12,6 @@ async function main() {
     console.log("Contract deployed to address: ", prof_review.address);
     // Here we need to figure out how to send the address back to website
     // in order to save the address for that specific professor in database
-
-
 }
 
 

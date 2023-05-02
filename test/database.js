@@ -337,6 +337,7 @@ db.addDefaultProfessors = () => {
   db.serialize(() => {
     db.addProfessor("Lewis Tseng");
     db.addUniversity("Boston College");
+    db.addUniversity("Tufts University");
     db.addCourse("CSCI3389", "Blockchain and Consensus Systems");
     db.addTeaching(1, 1, 1);
 
@@ -428,15 +429,20 @@ db.addDefaultProfessors = () => {
 
 module.exports = { db };
 // db.serialize(() => {
-//   db.addDefaultProfessors();
-
+//db.addDefaultProfessors();
 //   db.getUniversities();
 //   db.getAllProfessors();
 // });
 //   db.getProfessors(1);
   //db.getProfID("Lewis Tseng");
 
-db.addDefaultProfessors();
+//db.addDefaultProfessors();ß
+
+//db.dropProfessors();
+//db.dropTeaching();
+//db.dropUniversity();
+//db.dropCourse();
+
 
 // UPDATE Data
 //   db.updateProfessor(1, "Jane Doe");

@@ -12,7 +12,7 @@ const {
 
 const { db } = require("./database");
 
-const isHateSpeech = require(".");
+const { isHateSpeech } = require("./ApiServices/index");
 
 app.use(cors()); 
 app.use(express.json());
@@ -30,9 +30,13 @@ const verifyUser = async (idToken, suffix) => {
     });
     const payload = ticket.getPayload();
     userEmail = payload.email;
+    console.log(userEmail);
+
     if (!userEmail.endsWith(suffix)) {
       return null;
     }
+    console.log("Email verification complete!");
+
   } catch (error) {
     console.log(error);
     return null;
@@ -51,25 +55,30 @@ app.listen(3001, () => {
 //receive a request to create a new review
 app.post("/api/addReview", async (req, res) => {
   // Add review to blockchain contract
-  const { profID, review, rating, googleToken } = req.body;
+  // console.log(req);
+  const {  profID, review, rating, googleToken } = req.body;
+  console.log( profID, review, rating, googleToken);
+
+  // googleToken - add back to above
   if (verifyUser(googleToken, "@bc.edu") == null) {
+    console.log("You have to be signed into the right email");
     res.status(500).json({ success: false, error: "Invalid Google Token" });
     return;
   }
-
+  // else {
+  //   console.log("Email verification complete!")
+  // }
   // Check if review is hate speech
   const isHate = await isHateSpeech(review);
-  if (isHate == -1) {
-    res
-      .status(500)
-      .json({ success: false, error: "Error calling isHateSpeech" });
+
+  if (isHate === -1) {
+    res.status(500).json({ success: false, error: "Error calling isHateSpeech" });
     return;
-  } else if (isHate) {
-    res
-      .status(500)
-      .json({ success: false, error: "Review contains hate speech" });
+  } else if (isHate === 1) {
+    res.status(500).json({ success: false, error: "Review contains hate speech" });
     return;
   }
+  console.log("Finished checking hate review, the response is ", isHate); 
   const result = await addReview(profID, review, rating);
 
   // Nate changes: purpose of this?? Were not dealing with the transaction hash

@@ -1,9 +1,9 @@
 
 const Web3 = require("web3");
-const web3 = new Web3("https://eth-goerli.g.alchemy.com/v2/2weKkQ426LualTuW1XrCkDRyOOj284BH");
+const web3 = new Web3("https://eth-goerli.g.alchemy.com/v2/s1Q0CixH33Nz6mq-wPeALJvQaz0Ak3a0");
 const {ethers} = require("hardhat");
 
-const apiKey = process.env.API_KEY;
+const apiKey = process.env.API_KEY_ALCHEMY;
 const privateKey = process.env.PRIVATE_KEY;
 
 const contractAddress = process.env.CONTRACT_ADDRESS;
@@ -24,9 +24,11 @@ const addReview = async (profID, review, rating) => {
   try {
 
     console.log("Adding the review: " + review + "  Rating: " + rating);
-    const tx = await contractAdd.addReview(profID, review, rating).catch(error => {
-      throw new Error('might not have enough gas for transactions');
-    });
+    console.log("Hello Dobe");
+    // const tx = await contractAdd.addReview(profID, review, rating).catch(error => {
+    //   throw new Error('might not have enough gas for transactions');
+    // });
+    const tx = await contractAdd.addReview(profID, review, rating)
     console.log("The review has been added");
     
     return { success: true};
@@ -74,19 +76,19 @@ const getReviews = async (profID) => {
 };
 
 
-//addReview(2, "Professor Tseng is one of the best teachers I've had at Boston College!", 9);
+addReview(2, "Professor Tseng was too harsh of a grader", 4);
 
-getReviews(2).then((result) => {
-  let myList = result.reviewList;
-  let myAvg = result.average;
-  console.log(myList);
-  console.log(myAvg);
-});
+// getReviews(2).then((result) => {
+//   let myList = result.reviewList;
+//   let myAvg = result.average;
+//   console.log(myList);
+//   console.log(myAvg);
+// });
 
 
-module.exports = {
-  //updateDatabaseOnReviewAdded,
-  addReview,
-  getReviews
-};
+// module.exports = {
+//   //updateDatabaseOnReviewAdded,
+//   addReview,
+//   getReviews
+// };
 
